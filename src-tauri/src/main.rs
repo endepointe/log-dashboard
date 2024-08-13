@@ -16,8 +16,10 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-fn zeek_search() -> String 
+fn zeek_search(query: String) -> String 
 {
+    dbg!(query);
+    /*
     let params = ZeekSearchParamsBuilder::default()
         .path_prefix("~/dev/log-analysis/zeek-test-logs")
         .start_date("2024-07-02")
@@ -33,6 +35,7 @@ fn zeek_search() -> String
     {
         return res
     }
+    */
     String::from("")
 }
 

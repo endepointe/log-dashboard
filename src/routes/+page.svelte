@@ -11,7 +11,7 @@
         // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
         data = await invoke("zeek_search");
         item = JSON.parse(data);
-        console.log(item.CONN);
+        console.log(item);
 }
 </script>
 

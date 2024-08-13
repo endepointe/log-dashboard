@@ -3,11 +3,15 @@
     //import Sigma from "sigma";
 
 
+    import { invoke } from "@tauri-apps/api/tauri";
+
     type ParsedResult = {
         ip: String;
         date: String;
         proto: String;
     }
+    let submit: Boolean = false;
+    let query : String = "";
 
     function parse_ip(input: String): String | null 
     {
@@ -34,10 +38,9 @@
         return null;
     }
 
-    let query = String = "";
     function parse_query(input: String): ParsedResult | null
     {
-        let result: ParsedResult = {};
+        let result: ParsedResult | null = {};
         const parts = input.split(',');
         parts.forEach(part => {
             const [key, value] = part.split('=').map(s => s.trim());
@@ -66,10 +69,18 @@
         return result;
     }
 
-    function handle_search()
+    function handle_input()
+    {
+        // give ui feedback to the user whether their input is valid
+        // Example: ip = 127.0.0.1, dat= 07-02-2024. The 'dat=...' should be highlighted in red
+    }
+
+    function submit_query()
     {
         let result : ParsedResult = parse_query(query);
-        console.log("handle_search: ", result);
+        if (Object.keys(result).length > 0) {
+            invoke('zeek_search', { query: JSON.stringify(result) });
+        }
     }
 </script>
 
@@ -108,9 +119,24 @@
         margin-bottom: 20px;
     }
     .search-input {
-        width: 100%;
+        width: 80%;
         padding: 10px;
         font-size: 16px;
+    }
+    .search-button {
+        width: 20%;
+        padding: 10px;
+        margin-left: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 4px;
+    }
+
+    .search-button:hover {
+        background-color: #555;
     }
 </style>
 
@@ -118,11 +144,14 @@
     <header class="header">Dashboard header</header>
     <aside class="sidebar">sidebar navigation</aside>
     <main class="content">main content area
-        <input 
-            type="text" 
-            class="search-input" 
-            placeholder="Enter your search..."
-            bind:value={query} 
-            on:input={handle_search}>
+        <div class="search-container">
+            <input 
+                type="text" 
+                class="search-input" 
+                placeholder="Enter your search..."
+                bind:value={query} 
+                on:input={handle_input}>
+            <button class="search-button" on:click={submit_query}>Search</button>
+        </div>
     </main>
 </div>
