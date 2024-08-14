@@ -40,22 +40,6 @@ fn zeek_search(query: String) -> String
     let search : Result<SearchQuery, serde_json::Error> = serde_json::from_str(&query);
     if let Ok(result) = search 
     {
-        /*
-        dbg!(&result);
-        let ip = &result.get_ip();
-        dbg!(&ip);
-        let date = &result.get_date();
-        dbg!(&date);
-        if let Some(ip) = &search.ip?
-        {
-            dbg!(&ip);
-        }
-        if let Some(date) = &search.date?
-        {
-            dbg!(&date);
-        }
-        */
-
         let params = ZeekSearchParamsBuilder::default()
             .path_prefix("~/dev/log-analysis/zeek-test-logs")
             .start_date(result.get_date())
