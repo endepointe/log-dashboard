@@ -27,14 +27,14 @@
     }
     function parse_date(input: String): String | null 
     {
-        const regex = /\s*(\d{2}-\d{2}-\d{4})/;
+        const regex = /\s*(\d{4}-\d{2}-\d{2})/;
         const match = input.match(regex); 
         if (match) 
         {
             const [date] = match;
             return date;
         }
-        console.error("invalid query format. Expected: date = mm-dd-yyyy");
+        console.error("invalid query format. Expected: date = yyyy-mm-dd");
         return null;
     }
 
