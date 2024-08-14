@@ -79,7 +79,8 @@
     {
         let result : ParsedResult = parse_query(query);
         if (Object.keys(result).length > 0) {
-            invoke('zeek_search', { query: JSON.stringify(result) });
+            invoke('zeek_search', { query: JSON.stringify(result) })
+                .then((r) => console.log(r));
         }
     }
 </script>

@@ -72,23 +72,6 @@ fn zeek_search(query: String) -> String
             return res
         }
     }
-    /*
-    let params = ZeekSearchParamsBuilder::default()
-        .path_prefix("~/dev/log-analysis/zeek-test-logs")
-        .start_date("2024-07-02")
-        .src_ip(ip) // "43.134.231.178" exists
-        .build()
-        .unwrap();
-    dbg!(&params);
-
-    let mut log = ZeekLog::new();
-    let res = log.search(&params);
-    println!("{:?}", log.data.keys());
-    if let Ok(res) = serde_json::to_string(&log.data)
-    {
-        return res
-    }
-    */
     String::from("")
 }
 
