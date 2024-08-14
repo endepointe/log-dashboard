@@ -75,12 +75,12 @@
         // Example: ip = 127.0.0.1, dat= 07-02-2024. The 'dat=...' should be highlighted in red
     }
 
-    function submit_query()
+    async function submit_query()
     {
         let result : ParsedResult = parse_query(query);
         if (Object.keys(result).length > 0) {
-            invoke('zeek_search', { query: JSON.stringify(result) })
-                .then((r) => console.log(r));
+            let data = await invoke('zeek_search', { query: JSON.stringify(result) })
+            console.log(data);
         }
     }
 </script>
