@@ -20,6 +20,7 @@ fn greet(name: &str) -> String {
 struct SearchQuery<'q> {
     ip: Option<&'q str>,
     date: Option<&'q str>,
+    proto: Option<&'q str>,
 }
 impl<'q> SearchQuery<'q>
 {
@@ -32,18 +33,25 @@ impl<'q> SearchQuery<'q>
     {
         self.date
     }
+
+    fn get_proto(&self) -> Option<&'q str>
+    {
+        self.proto
+    }
 }
 
 #[tauri::command]
 fn zeek_search(query: String) -> String 
 {
+    // date = 2024-07-02, ip = 43.134.231.178, proto = conn
     let search : Result<SearchQuery, serde_json::Error> = serde_json::from_str(&query);
     if let Ok(result) = search 
     {
         let params = ZeekSearchParamsBuilder::default()
             .path_prefix("~/dev/log-analysis/zeek-test-logs")
             .start_date(result.get_date())
-            .src_ip(result.get_ip()) // "43.134.231.178" exists
+            .src_ip(result.get_ip())
+            .proto_type(result.get_proto())
             .build()
             .unwrap();
         dbg!(&params);

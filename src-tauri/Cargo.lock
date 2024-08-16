@@ -1463,9 +1463,9 @@ checksum = "a7a70ba024b9dc04c27ea2f0c0548feb474ec5c54bba33a7f72f873a39d07b24"
 
 [[package]]
 name = "log-analysis"
-version = "0.1.53"
+version = "0.1.54"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e3c2ceb8b452eece1d69dd7c454f497647750ad17e080cfb7c274242cff53b74"
+checksum = "2f17b9c755d5b64aec1685fbe6a3937a5ff1a6ad404c16048df51790d654c8f9"
 dependencies = [
  "derive_builder",
  "serde",

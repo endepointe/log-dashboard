@@ -1,18 +1,5 @@
 <script lang="ts">
     import Dashboard from "$lib/dashboard.svelte";
-    console.log(Dashboard);
-
-    import { invoke } from "@tauri-apps/api/tauri";
-
-    let data = "";
-    let item = "";
-
-    async function zeek_search() {
-        // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-        data = await invoke("zeek_search");
-        item = JSON.parse(data);
-        console.log(item);
-}
 </script>
 
 <div class="container">

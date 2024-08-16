@@ -38,6 +38,19 @@
         return null;
     }
 
+    function parse_protocol(input: String): String | null 
+    {
+        const regex = /^[A-Za-z]+$/; 
+        const match = input.match(regex); 
+        if (match) 
+        {
+            const [proto] = match;
+            return proto;
+        }
+        console.error("invalid query format. Expected: proto = [A-Za-z]");
+        return null;
+    }
+
     function parse_query(input: String): ParsedResult | null
     {
         let result: ParsedResult | null = {};
@@ -59,9 +72,12 @@
                         result.date = value;
                     }
                     break;                
-                    case "proto": 
-                        result.proto = value; 
-                        break;
+                case "proto": 
+                    res = parse_protocol(value);
+                    if (res !== null) {
+                        result.proto = value
+                    }
+                    break;
                 default: 
                     break;
             }
