@@ -1,7 +1,7 @@
 <script lang="ts">
-    //import Graph from "graphology";
-    //import Sigma from "sigma";
-
+    import LinePlot from "$lib/lineplot.svelte";
+    console.log(LinePlot);
+    import GlobalMap from "$lib/globalmap.svelte";
 
     import { invoke } from "@tauri-apps/api/tauri";
 
@@ -38,7 +38,7 @@
         return null;
     }
 
-    function parse_protocol(input: String): String | null 
+    function parse_proto(input: String): String | null 
     {
         const regex = /^[A-Za-z]+$/; 
         const match = input.match(regex); 
@@ -73,7 +73,7 @@
                     }
                     break;                
                 case "proto": 
-                    res = parse_protocol(value);
+                    res = parse_proto(value);
                     if (res !== null) {
                         result.proto = value
                     }
@@ -94,9 +94,10 @@
     async function submit_query()
     {
         let result : ParsedResult = parse_query(query);
+        console.log(result);
         if (Object.keys(result).length > 0) {
-            let data = await invoke('zeek_search', { query: JSON.stringify(result) })
-            console.log(data);
+           let data = await invoke('zeek_search', { query: JSON.stringify(result) })
+           console.log(data);
         }
     }
 </script>
@@ -125,6 +126,7 @@
         grid-area: sidebar;
         background-color: #f4f4f4;
         padding: 20px;
+        color: black;
     }
 
     .content {
@@ -133,7 +135,7 @@
     }
 
     .search-container {
-        margin-bottom: 20px;
+        display: flex;
     }
     .search-input {
         width: 80%;
@@ -143,7 +145,6 @@
     .search-button {
         width: 20%;
         padding: 10px;
-        margin-left: 10px;
         font-size: 16px;
         cursor: pointer;
         background-color: #333;
@@ -151,16 +152,18 @@
         border: none;
         border-radius: 4px;
     }
-
     .search-button:hover {
         background-color: #555;
+    }
+    .content-container {
+        width: 90%;
     }
 </style>
 
 <div class="dashboard">
-    <header class="header">Dashboard header</header>
-    <aside class="sidebar">sidebar navigation</aside>
-    <main class="content">main content area
+    <aside class="sidebar">
+        sidebar navigation</aside>
+    <main class="content">
         <div class="search-container">
             <input 
                 type="text" 
@@ -169,6 +172,9 @@
                 bind:value={query} 
                 on:input={handle_input}>
             <button class="search-button" on:click={submit_query}>Search</button>
+        </div>
+        <div class="content-container">
+            <GlobalMap width={600} height={600}/> 
         </div>
     </main>
 </div>

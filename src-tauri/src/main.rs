@@ -4,10 +4,12 @@
 use log_analysis::{
     zeek::zeek_search_params::ZeekSearchParams,
     zeek::zeek_search_params::ZeekSearchParamsBuilder,     
+    zeek::zeek_log_proto::ZeekProtocol,
     zeek::zeek_log::ZeekLog,
     types::types::LogTree,
     types::helpers::print_type_of,
 };
+mod ip2location;
 
 use serde::{Deserialize, Serialize};
 
@@ -58,16 +60,14 @@ fn zeek_search(query: String) -> String
 
         let mut log = ZeekLog::new();
         let res = log.search(&params);
-        println!("{:?}", log.data.keys());
-        if let Ok(res) = serde_json::to_string(&log.data)
-        {
-            return res
-        }
+        println!("{:?}", log.data);
+        return String::from("gathering data...")
     }
     String::from("")
 }
 
 fn main() {
+    println!("{}",ip2location::get_info());
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet,zeek_search])
         .run(tauri::generate_context!())

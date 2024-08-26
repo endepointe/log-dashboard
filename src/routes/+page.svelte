@@ -3,10 +3,10 @@
 </script>
 
 <div class="container">
-    <form id="zeek-search" class="row" on:submit|preventDefault={zeek_search}>
-        <button type="submit">Zeek Data</button>
-    </form>
     <Dashboard/>
+    <footer class="ip2locattr">
+        This demo uses IP2Location.io <a href="https://www.ip2location.io">IP geolocation</a> web service.
+    </footer>
 </div>
 
 <style>
@@ -27,53 +27,22 @@ text-rendering: optimizeLegibility;
 }
 
 .container {
-margin: 0;
-padding-top: 10vh;
-display: flex;
-flex-direction: column;
-justify-content: center;
-text-align: center;
+    margin:0;
+    padding:0;
 }
 
-.row {
-display: flex;
-justify-content: center;
+.ip2locattr{
+    position: absolute;
+    bottom: 0;
+    left:0;
+    right:0;
+    width: 100%;
+    text-align: center;
 }
-
-button {
-border-radius: 8px;
-border: 1px solid transparent;
-padding: 0.6em 1.2em;
-font-size: 1em;
-font-weight: 500;
-font-family: inherit;
-color: #0f0f0f;
-background-color: #ffffff;
-transition: border-color 0.25s;
-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
-
-button {
-cursor: pointer;
-}
-
-button {
-outline: none;
-}
-
-#zeek-search {
-margin-right: 5px;
-}
-
 @media (prefers-color-scheme: dark) {
 :root {
   color: #f6f6f6;
   background-color: #2f2f2f;
-}
-
-button {
-  color: #ffffff;
-  background-color: #0f0f0f98;
 }
 }
 </style>
